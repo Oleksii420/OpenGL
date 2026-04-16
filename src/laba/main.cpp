@@ -1,6 +1,8 @@
 #include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+
+#include "shader_utils.h"
 
 using namespace std;
 
@@ -31,48 +33,11 @@ int main(void) { GLFWwindow* window;
 
     glClearColor(1.0, 1.0, 1.0, 1.0);
 
-    auto vertexShaderCode = R"(
-    #version 330 core
-
-    in vec4 aPos;
-    in vec3 aColor;
-
-    out vec3 color;
-
-    void main() {
-        gl_Position = aPos;
-        color = aColor;
-    }
-)";
-
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderCode, nullptr);
-    glCompileShader(vertexShader);
-
-    auto fragmentShaderCode = R"(
-    #version 330 core
-
-    in vec3 color;
-
-    out vec4 FragColor;
-
-    void main() {
-        FragColor = vec4(color, 1.0);
-}
-)";
-
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderCode, nullptr);
-    glCompileShader(fragmentShader);
-
-// Програма з шейдерів
-    GLuint shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    std::string vertexShaderName = "res/shaders/triangle.vert";
+    std::string fragmentShaderName = "res/shaders/triangle.frag";
+    GLuint shaderProgram = createProgram(
+            vertexShaderName,
+            fragmentShaderName);
 
 
     float vertices[] = {
