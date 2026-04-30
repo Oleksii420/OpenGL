@@ -4,11 +4,13 @@
 
 #include "glad/glad.h"
 
+using namespace std;
 
-std::string LoadShaderFromFile(const std::string &filePath);
-GLuint  createShader(std::string &filePath, GLuint shaderType);
+
+string LoadShaderFromFile(const string &filePath);
+GLuint createShader(string &filePath, GLuint shaderType);
 GLuint createProgram(
-        std::string &vertexShaderName,
-        std::string &fragmentShaderName);
+        string &vertexShaderName,
+        string &fragmentShaderName);
 
 #endif //OPENGL_START_SHADER_UTILS_H
